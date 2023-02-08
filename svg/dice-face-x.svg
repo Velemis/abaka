@@ -1,0 +1,18 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <radialGradient id="delapouite-dice-six-faces-one-gradient-1">
+   <stop stop-color="#ffffff" offset="0%"/>
+   <stop stop-color="#ffffff" offset="100%"/>
+  </radialGradient>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_1" ry="60" rx="60" width="512" height="512" fill="#000"/>
+  <path stroke="null" id="svg_3" fill="url(#delapouite-dice-six-faces-one-gradient-1)" d="m74.5,36a38.5,38.5 0 0 0 -38.5,38.5l0,363a38.5,38.5 0 0 0 38.5,38.5l363,0a38.5,38.5 0 0 0 38.5,-38.5l0,-363a38.5,38.5 0 0 0 -38.5,-38.5c-121,0 -242,0 -363,0z"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="250" id="svg_8" y="342.500193" x="172.624781" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="null" fill="#000000">X</text>
+ </g>
+</svg>
