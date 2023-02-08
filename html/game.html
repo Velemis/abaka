@@ -6,6 +6,7 @@
     <title>Abaka</title>
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/game.css">
     <script src="../js/jquery-3.6.3.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/game.js"></script>
@@ -23,19 +24,19 @@
         </div>
         <div class="row justify-content-around text-center">
             <div class="col col-lg">
-                <img id="dice1" width="80px" height="80px" src="../svg/dice-face-1.svg" alt="dice1">
+                <img id="dice1" class="dice-big" src="../svg/dice-face-1.svg" alt="dice1">
             </div>
             <div class="col col-lg">
-                <img id="dice2" width="80px" height="80px" src="../svg/dice-face-2.svg" alt="dice2">
+                <img id="dice2" class="dice-big" src="../svg/dice-face-2.svg" alt="dice2">
             </div>
             <div class="col col-lg">
-                <img id="dice3" width="80px" height="80px" src="../svg/dice-face-3.svg" alt="dice3">
+                <img id="dice3" class="dice-big" src="../svg/dice-face-3.svg" alt="dice3">
             </div>
             <div class="col col-lg">
-                <img id="dice4" width="80px" height="80px" src="../svg/dice-face-4.svg" alt="dice4">
+                <img id="dice4" class="dice-big" src="../svg/dice-face-4.svg" alt="dice4">
             </div>
             <div class="col col-lg">
-                <img id="dice5" width="80px" height="80px" src="../svg/dice-face-5.svg" alt="dice5">
+                <img id="dice5" class="dice-big" src="../svg/dice-face-5.svg" alt="dice5">
             </div>
         </div>
         <br/>
@@ -48,87 +49,225 @@
     <br/>
     <div id="resultTableContainer">
         <h1>Result table</h1>
-        <table id="resultTable" class="table table-hover table-responsive-lg">
-            <thead>
+        <table id="resultTable" class="table table-hover table-responsive-lg table-primary">
+            <thead class="table-dark">
             <tr>
                 <th scope="col">Combo</th>
+                <th scope="col">Combo example</th>
                 <th scope="col">Current throw</th>
                 <th scope="col">Current points</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr id="pairCombo" class="combo">
                 <th scope="row">One pair</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="twoPairCombo" class="combo">
                 <th scope="row">Two pair</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-y.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-y.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="threeOfAKindCombo" class="combo">
                 <th scope="row">Three of a kind</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="fourOfAKindCombo" class="combo">
                 <th scope="row">Four of a kind</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="fiveOfAKindCombo" class="combo">
                 <th scope="row">Five of a kind</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="smallStraightCombo" class="combo">
                 <th scope="row">Small straight</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-1.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-2.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-3.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="bigStraightCombo" class="combo">
                 <th scope="row">Big straight</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-1.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-2.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-3.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x-plus-3.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="fullHouseCombo" class="combo">
                 <th scope="row">Full house</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-y.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-y.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="maximumCombo" class="combo">
                 <th scope="row">Maximum</th>
+                <td>
+                    <p>
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="minimumCombo" class="combo">
                 <th scope="row">Minimum</th>
+                <td>
+                    <p>
+                        36 - (
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        +
+                        <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
+                        )
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="evensCombo" class="combo">
                 <th scope="row">Evens</th>
+                <td>
+                    <p>
+                        Sum of (
+                        <img class="dice-small" src="../svg/dice-face-2.svg" alt="dice">
+                        /
+                        <img class="dice-small" src="../svg/dice-face-4.svg" alt="dice">
+                        /
+                        <img class="dice-small" src="../svg/dice-face-6.svg" alt="dice">
+                        )
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr id="oddsCombo" class="combo">
                 <th scope="row">Odds</th>
+                <td>
+                    <p>
+                        Sum of (
+                        <img class="dice-small" src="../svg/dice-face-1.svg" alt="dice">
+                        /
+                        <img class="dice-small" src="../svg/dice-face-3.svg" alt="dice">
+                        /
+                        <img class="dice-small" src="../svg/dice-face-5.svg" alt="dice">
+                        )
+                    </p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-                <th scope="row">Odds</th>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
+            <tr id="jumbleCombo" class="combo">
                 <th scope="row">Jumble</th>
+                <td>
+                    <p>Any other combo already set</p>
+                </td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
+            <tr class="table-dark">
                 <th scope="row">Total</th>
+                <td></td>
                 <td></td>
                 <th scope="row">0</th>
             </tr>

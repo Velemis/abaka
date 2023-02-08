@@ -31,6 +31,15 @@ const game = {
             return;
         }
         this.currentGameState.roll();
+    },
+
+    /**
+     * Set the points for combo.
+     *
+     * @param comboId Combination id
+     */
+    setPoints: function (comboId) {
+        alert(comboId);
     }
 
 }
@@ -88,6 +97,10 @@ class UIRenderer {
         this.throwCounterElement = document.getElementById("throwCounter");
         this.resultDoubleElement = document.getElementById("resultDouble");
         this.rollButtonElement = document.getElementById("rollButton");
+        let comboElements = document.getElementsByClassName("combo");
+        for (const comboElement of comboElements) {
+            comboElement.addEventListener("click", () => game.setPoints(comboElement.id));
+        }
     }
 
     onRoll(dicePoints, throws, resultIsDoubled, canRoll) {
