@@ -8,15 +8,132 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/jquery-3.6.3.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/game.js"></script>
 </head>
-<body class="bg-success">
-<div class="min-vh-100 d-flex flex-column justify-content-center align-items-center">
-    <div id="diceArea" class="container" style="height: 300px">
-
+<body class="bg-success" onload="game.initGame()">
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <div id="diceArea" class="container" style="min-height: 200px">
+        <div class="row justify-content-between">
+            <div class="col col-lg-4 text-start">
+                <h1>Throws: 0/3</h1>
+            </div>
+            <div class="col col-lg-4 text-end">
+                <h2 class="text-light">Result x2</h2>
+            </div>
+        </div>
+        <div class="row justify-content-around text-center">
+            <div class="col col-lg">
+                <img id="dice1" width="80px" height="80px" src="../svg/dice-face-1.svg" alt="dice1">
+            </div>
+            <div class="col col-lg">
+                <img id="dice2" width="80px" height="80px" src="../svg/dice-face-2.svg" alt="dice2">
+            </div>
+            <div class="col col-lg">
+                <img id="dice3" width="80px" height="80px" src="../svg/dice-face-3.svg" alt="dice3">
+            </div>
+            <div class="col col-lg">
+                <img id="dice4" width="80px" height="80px" src="../svg/dice-face-4.svg" alt="dice4">
+            </div>
+            <div class="col col-lg">
+                <img id="dice5" width="80px" height="80px" src="../svg/dice-face-5.svg" alt="dice5">
+            </div>
+        </div>
+        <br/>
+        <div class="row justify-content-around">
+            <div class="col col-md-4">
+                <button class="btn btn-primary btn-lg w-100" onclick="game.roll()">Roll</button>
+            </div>
+        </div>
     </div>
-    <p>Result table</p>
-    <div id="resultTable" class="table table-responsive">
-
+    <br/>
+    <div id="resultTableContainer">
+        <h1>Result table</h1>
+        <table id="resultTable" class="table table-hover table-responsive-lg">
+            <thead>
+            <tr>
+                <th scope="col">Combo</th>
+                <th scope="col">Current throw</th>
+                <th scope="col">Current points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">One pair</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Two pair</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Three of a kind</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Four of a kind</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Five of a kind</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Small straight</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Big straight</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Full house</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Maximum</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Minimum</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Evens</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Odds</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Odds</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Jumble</th>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Total</th>
+                <td></td>
+                <th scope="row">0</th>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
