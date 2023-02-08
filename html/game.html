@@ -24,19 +24,19 @@
         </div>
         <div class="row justify-content-around text-center">
             <div class="col col-lg">
-                <img id="dice1" class="dice-big" src="../svg/dice-face-1.svg" alt="dice1">
+                <img id="dice1" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
             <div class="col col-lg">
-                <img id="dice2" class="dice-big" src="../svg/dice-face-2.svg" alt="dice2">
+                <img id="dice2" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
             <div class="col col-lg">
-                <img id="dice3" class="dice-big" src="../svg/dice-face-3.svg" alt="dice3">
+                <img id="dice3" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
             <div class="col col-lg">
-                <img id="dice4" class="dice-big" src="../svg/dice-face-4.svg" alt="dice4">
+                <img id="dice4" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
             <div class="col col-lg">
-                <img id="dice5" class="dice-big" src="../svg/dice-face-5.svg" alt="dice5">
+                <img id="dice5" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
         </div>
         <br/>
@@ -48,7 +48,7 @@
     </div>
     <br/>
     <div id="resultTableContainer">
-        <h1>Result table</h1>
+        <h1 class="text-center">Result table</h1>
         <table id="resultTable" class="table table-hover table-responsive-lg table-primary">
             <thead class="table-dark">
             <tr>
@@ -59,7 +59,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr id="pairCombo" class="combo">
+            <tr id="pairCombo" class="combo-container">
                 <th scope="row">One pair</th>
                 <td>
                     <p>
@@ -68,10 +68,10 @@
                         <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="twoPairCombo" class="combo">
+            <tr id="twoPairCombo" class="combo-container">
                 <th scope="row">Two pair</th>
                 <td>
                     <p>
@@ -84,10 +84,10 @@
                         <img class="dice-small" src="../svg/dice-face-y.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="threeOfAKindCombo" class="combo">
+            <tr id="threeOfAKindCombo" class="combo-container">
                 <th scope="row">Three of a kind</th>
                 <td>
                     <p>
@@ -98,10 +98,10 @@
                         <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="fourOfAKindCombo" class="combo">
+            <tr id="fourOfAKindCombo" class="combo-container">
                 <th scope="row">Four of a kind</th>
                 <td>
                     <p>
@@ -114,10 +114,10 @@
                         <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="fiveOfAKindCombo" class="combo">
+            <tr id="fiveOfAKindCombo" class="combo-container">
                 <th scope="row">Five of a kind</th>
                 <td>
                     <p>
@@ -132,10 +132,10 @@
                         <img class="dice-small" src="../svg/dice-face-x.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="smallStraightCombo" class="combo">
+            <tr id="smallStraightCombo" class="combo-container">
                 <th scope="row">Small straight</th>
                 <td>
                     <p>
@@ -148,10 +148,10 @@
                         <img class="dice-small" src="../svg/dice-face-x-plus-3.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="bigStraightCombo" class="combo">
+            <tr id="bigStraightCombo" class="combo-container">
                 <th scope="row">Big straight</th>
                 <td>
                     <p>
@@ -166,10 +166,10 @@
                         <img class="dice-small" src="../svg/dice-face-x-plus-3.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="fullHouseCombo" class="combo">
+            <tr id="fullHouseCombo" class="combo-container">
                 <th scope="row">Full house</th>
                 <td>
                     <p>
@@ -184,10 +184,10 @@
                         <img class="dice-small" src="../svg/dice-face-y.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="maximumCombo" class="combo">
+            <tr id="maximumCombo" class="combo-container">
                 <th scope="row">Maximum</th>
                 <td>
                     <p>
@@ -202,10 +202,10 @@
                         <img class="dice-small" src="../svg/dice-face-unknown.svg" alt="dice">
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="minimumCombo" class="combo">
+            <tr id="minimumCombo" class="combo-container">
                 <th scope="row">Minimum</th>
                 <td>
                     <p>
@@ -222,10 +222,10 @@
                         )
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="evensCombo" class="combo">
+            <tr id="evensCombo" class="combo-container">
                 <th scope="row">Evens</th>
                 <td>
                     <p>
@@ -238,10 +238,10 @@
                         )
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="oddsCombo" class="combo">
+            <tr id="oddsCombo" class="combo-container">
                 <th scope="row">Odds</th>
                 <td>
                     <p>
@@ -254,24 +254,26 @@
                         )
                     </p>
                 </td>
-                <td></td>
-                <td></td>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
-            <tr id="jumbleCombo" class="combo">
+            <tr id="jumbleCombo" class="combo-container">
                 <th scope="row">Jumble</th>
                 <td>
                     <p>Any other combo already set</p>
                 </td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr class="table-dark">
-                <th scope="row">Total</th>
-                <td></td>
-                <td></td>
-                <th scope="row">0</th>
+                <td class="currentThrowResult"></td>
+                <td class="currentComboResult"></td>
             </tr>
             </tbody>
+            <tfoot>
+                <tr class="table-dark">
+                    <th scope="row">Total</th>
+                    <td></td>
+                    <td></td>
+                    <td id="totalResult">0</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

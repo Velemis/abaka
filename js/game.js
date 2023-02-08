@@ -4,6 +4,7 @@ const MAX_THROWS = 3;
 
 // Resources consts
 const DICE_THROW_SOUNDS_COUNT = 3;
+const COIN_PICK_SOUNDS_COUNT = 5;
 
 const game = {
 
@@ -38,8 +39,8 @@ const game = {
      *
      * @param comboId Combination id
      */
-    setPoints: function (comboId) {
-        alert(comboId);
+    triggerCombo: function (comboId) {
+        this.currentGameState.setPointsForCombo(comboId);
     }
 
 }
@@ -71,12 +72,30 @@ class GameState {
             this.dicePoints.push(this.getRandomPoints());
         }
 
-        this.uIRenderer.onRoll(this.dicePoints, this.throws, this.resultIsDoubled(), this.canRoll());
+        this.uIRenderer.onStateChange(this.dicePoints, this.throws, this.resultIsDoubled(), this.canRoll());
         this.soundRenderer.onRoll();
     }
 
     getRandomPoints() {
         return Math.floor(Math.random() * 5) + 1;
+    }
+
+    setPointsForCombo(comboId) {
+        let points = Math.floor(Math.random() * 100);
+
+        // todo
+
+        this.uIRenderer.onPointsSet(comboId, points);
+        this.soundRenderer.onPointsSet();
+
+        this.nextTurn();
+    }
+
+    nextTurn() {
+        this.dicePoints = [];
+        this.throws = 0;
+
+        this.uIRenderer.onStateChange(this.dicePoints, this.throws, this.resultIsDoubled(), this.canRoll());
     }
 
 }
@@ -97,23 +116,30 @@ class UIRenderer {
         this.throwCounterElement = document.getElementById("throwCounter");
         this.resultDoubleElement = document.getElementById("resultDouble");
         this.rollButtonElement = document.getElementById("rollButton");
-        let comboElements = document.getElementsByClassName("combo");
+        let comboElements = document.getElementsByClassName("combo-container");
         for (const comboElement of comboElements) {
-            comboElement.addEventListener("click", () => game.setPoints(comboElement.id));
+            comboElement.addEventListener("click", () => game.triggerCombo(comboElement.id));
         }
     }
 
-    onRoll(dicePoints, throws, resultIsDoubled, canRoll) {
+    onStateChange(dicePoints, throws, resultIsDoubled, canRoll) {
         this.onDicePointsChanged(dicePoints);
         this.onThrowsChanged(throws, canRoll);
         this.onResultIsDoubledChanged(resultIsDoubled);
     }
 
     onDicePointsChanged(dicePoints) {
-        for (let i = 0; i < dicePoints.length && i < DICE_COUNT; i++) {
-            const dicePoint = dicePoints[i];
-            let diceElement = this.diceElements[i];
-            diceElement.src = this.imageLoader.getImagePathForPoints(dicePoint);
+        if (dicePoints.length === 0) {
+            for (let i = 0; i < DICE_COUNT; i++) {
+                let diceElement = this.diceElements[i];
+                diceElement.src = this.imageLoader.getImagePathForUnknown();
+            }
+        } else {
+            for (let i = 0; i < dicePoints.length && i < DICE_COUNT; i++) {
+                const dicePoint = dicePoints[i];
+                let diceElement = this.diceElements[i];
+                diceElement.src = this.imageLoader.getImagePathForPoints(dicePoint);
+            }
         }
     }
 
@@ -150,6 +176,13 @@ class UIRenderer {
         }
     }
 
+    onPointsSet(comboId, points) {
+        let comboContainer = document.getElementById(comboId);
+        let currentComboResultElement = comboContainer.getElementsByClassName("currentComboResult");
+        if (currentComboResultElement.length > 0) {
+            currentComboResultElement[0].innerHTML = points;
+        }
+    }
 }
 
 class ImageLoader {
@@ -158,16 +191,24 @@ class ImageLoader {
         return `../svg/dice-face-${points}.svg`;
     }
 
+    getImagePathForUnknown() {
+        return `../svg/dice-face-unknown.svg`;
+    }
+
 }
 
 // noinspection JSIgnoredPromiseFromCall
 class SoundRenderer {
 
     diceSound = [];
+    coinSound = [];
 
     constructor() {
         for (let i = 1; i <= DICE_THROW_SOUNDS_COUNT; i++) {
             this.diceSound.push(new Audio(`../sound/dice-throw-${i}.wav`));
+        }
+        for (let i = 1; i <= COIN_PICK_SOUNDS_COUNT; i++) {
+            this.coinSound.push(new Audio(`../sound/coin-pick-${i}.wav`));
         }
     }
 
@@ -176,7 +217,15 @@ class SoundRenderer {
     }
 
     getRandomThrowSound() {
-        return this.diceSound[Math.floor(Math.random() * 2) + 1];
+        return this.diceSound[Math.floor(Math.random() * DICE_THROW_SOUNDS_COUNT)];
+    }
+
+    onPointsSet() {
+        this.getRandomCoinPickSound().play();
+    }
+
+    getRandomCoinPickSound() {
+        return this.coinSound[Math.floor(Math.random() * COIN_PICK_SOUNDS_COUNT)];
     }
 
 }
