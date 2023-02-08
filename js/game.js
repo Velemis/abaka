@@ -1,18 +1,25 @@
+// Game consts
 const DICE_COUNT = 5;
+const MAX_THROWS = 3;
+
+// Resources consts
+const DICE_THROW_SOUNDS_COUNT = 3;
 
 const game = {
 
     currentGameState: null,
     uIRenderer: null,
     imageLoader: null,
+    soundRenderer: null,
 
     /**
      * Initialize the game.
      */
     initGame: function () {
-        this.imageLoader = new ImageLoader()
-        this.currentGameState = new GameState();
+        this.imageLoader = new ImageLoader();
         this.uIRenderer = new UIRenderer(this.imageLoader);
+        this.soundRenderer = new SoundRenderer();
+        this.currentGameState = new GameState(this.uIRenderer, this.soundRenderer);
     },
 
     /**
@@ -23,9 +30,7 @@ const game = {
         if (this.currentGameState.canRoll() !== true) {
             return;
         }
-
-        let dicePoints = this.currentGameState.roll();
-        this.uIRenderer.onDicePointsChanged(dicePoints);
+        this.currentGameState.roll();
     }
 
 }
@@ -34,21 +39,31 @@ class GameState {
 
     throws = 0;
     dicePoints = [];
+    uIRenderer = null;
+    soundRenderer = null;
+
+    constructor(uIRenderer, soundRenderer) {
+        this.uIRenderer = uIRenderer;
+        this.soundRenderer = soundRenderer;
+    }
 
     resultIsDoubled() {
         return this.throws === 1;
     }
 
     canRoll() {
-        return this.throws < 3;
+        return this.throws < MAX_THROWS;
     }
 
     roll() {
+        this.throws++;
         this.dicePoints = [];
         for (let i = 0; i < DICE_COUNT; i++) {
-            this.dicePoints.push(this.getRandomPoints())
+            this.dicePoints.push(this.getRandomPoints());
         }
-        return this.dicePoints;
+
+        this.uIRenderer.onRoll(this.dicePoints, this.throws, this.resultIsDoubled(), this.canRoll());
+        this.soundRenderer.onRoll();
     }
 
     getRandomPoints() {
@@ -59,14 +74,26 @@ class GameState {
 
 class UIRenderer {
 
-    imageLoader;
+    imageLoader = null;
     diceElements = [];
+    throwCounterElement = null;
+    resultDoubleElement = null;
+    rollButtonElement = null;
 
     constructor(imageLoader) {
         this.imageLoader = imageLoader;
         for (let i = 1; i <= DICE_COUNT; i++) {
             this.diceElements.push(document.getElementById("dice" + i));
         }
+        this.throwCounterElement = document.getElementById("throwCounter");
+        this.resultDoubleElement = document.getElementById("resultDouble");
+        this.rollButtonElement = document.getElementById("rollButton");
+    }
+
+    onRoll(dicePoints, throws, resultIsDoubled, canRoll) {
+        this.onDicePointsChanged(dicePoints);
+        this.onThrowsChanged(throws, canRoll);
+        this.onResultIsDoubledChanged(resultIsDoubled);
     }
 
     onDicePointsChanged(dicePoints) {
@@ -77,12 +104,66 @@ class UIRenderer {
         }
     }
 
+    onThrowsChanged(throws, canRoll) {
+        this.throwCounterElement.innerHTML = `Throws: ${throws}/${MAX_THROWS}`;
+        let classList = this.rollButtonElement.classList;
+        if (canRoll) {
+            if (classList.contains("disabled")) {
+                classList.remove("disabled");
+            }
+        } else {
+            if (!classList.contains("disabled")) {
+                classList.add("disabled");
+            }
+        }
+    }
+
+    onResultIsDoubledChanged(resultIsDoubled) {
+        let classList = this.resultDoubleElement.classList;
+        if (resultIsDoubled) {
+            if (classList.contains("invisible")) {
+                classList.remove("invisible");
+            }
+            if (!classList.contains("visible")) {
+                classList.add("visible");
+            }
+        } else {
+            if (classList.contains("visible")) {
+                classList.remove("visible");
+            }
+            if (!classList.contains("invisible")) {
+                classList.add("invisible");
+            }
+        }
+    }
+
 }
 
 class ImageLoader {
 
     getImagePathForPoints(points) {
-        return "../svg/dice-face-" + points + ".svg";
+        return `../svg/dice-face-${points}.svg`;
+    }
+
+}
+
+// noinspection JSIgnoredPromiseFromCall
+class SoundRenderer {
+
+    diceSound = [];
+
+    constructor() {
+        for (let i = 1; i <= DICE_THROW_SOUNDS_COUNT; i++) {
+            this.diceSound.push(new Audio(`../sound/dice-throw-${i}.wav`));
+        }
+    }
+
+    onRoll() {
+        this.getRandomThrowSound().play();
+    }
+
+    getRandomThrowSound() {
+        return this.diceSound[Math.floor(Math.random() * 2) + 1];
     }
 
 }

@@ -15,10 +15,10 @@
     <div id="diceArea" class="container" style="min-height: 200px">
         <div class="row justify-content-between">
             <div class="col col-lg-4 text-start">
-                <h1>Throws: 0/3</h1>
+                <h1 id="throwCounter">Throws: 0/3</h1>
             </div>
             <div class="col col-lg-4 text-end">
-                <h2 class="text-light">Result x2</h2>
+                <h2 id="resultDouble" class="text-light invisible">Result x2</h2>
             </div>
         </div>
         <div class="row justify-content-around text-center">
@@ -41,7 +41,7 @@
         <br/>
         <div class="row justify-content-around">
             <div class="col col-md-4">
-                <button class="btn btn-primary btn-lg w-100" onclick="game.roll()">Roll</button>
+                <button id="rollButton" class="btn btn-primary btn-lg w-100" onclick="game.roll()">Roll</button>
             </div>
         </div>
     </div>
