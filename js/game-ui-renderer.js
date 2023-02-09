@@ -30,16 +30,17 @@ class GameUIRenderer {
         canRoll,
         possiblePointsForCombos,
         currentPointsForCombos,
-        totalPoints
+        totalPoints,
+        blockedDices
     ) {
-        this.onDicePointsChanged(dicePoints);
+        this.onDicePointsOrStateChanged(dicePoints, blockedDices);
         this.onPossibleOrCurrentPointsChanged(possiblePointsForCombos, currentPointsForCombos);
         this.onThrowsChanged(throws, canRoll);
         this.onResultIsDoubledChanged(resultIsDoubled);
         this.onTotalPointsChanged(totalPoints);
     }
 
-    onDicePointsChanged(dicePoints) {
+    onDicePointsOrStateChanged(dicePoints, blockedDices) {
         if (dicePoints.length === 0) {
             for (let i = 0; i < DICE_COUNT; i++) {
                 let diceElement = this.diceElements[i];
@@ -49,7 +50,11 @@ class GameUIRenderer {
             for (let i = 0; i < dicePoints.length && i < DICE_COUNT; i++) {
                 const dicePoint = dicePoints[i];
                 let diceElement = this.diceElements[i];
-                diceElement.src = this.imageLoader.getImagePathForDice(dicePoint);
+                if (blockedDices[i] === true) {
+                    diceElement.src = this.imageLoader.getImagePathForBlockedDice(dicePoint);
+                } else {
+                    diceElement.src = this.imageLoader.getImagePathForDice(dicePoint);
+                }
             }
         }
     }

@@ -75,12 +75,10 @@ class GameState {
     constructor(uIRenderer, soundRenderer) {
         this.uIRenderer = uIRenderer;
         this.soundRenderer = soundRenderer;
+        this.resetBlockedDices();
         this.resetPossiblePointsForCombos();
         for (const combo in combos) {
             this.currentPointsForCombos.set(combo, null);
-        }
-        for (let i = 1; i <= DICE_COUNT; i++) {
-            this.blockedDices.push(false);
         }
     }
 
@@ -100,9 +98,10 @@ class GameState {
         // set throws
         this.throws++;
         // set dice points
-        this.dicePoints = [];
         for (let i = 0; i < DICE_COUNT; i++) {
-            this.dicePoints.push(this.getRandomPoints());
+            if (this.blockedDices[i] !== true) {
+                this.dicePoints[i] = this.getRandomPoints();
+            }
         }
         // set possible points
         this.possiblePointsForCombos.clear();
@@ -121,7 +120,8 @@ class GameState {
             this.canRoll(),
             this.possiblePointsForCombos,
             this.currentPointsForCombos,
-            this.getTotalPoints()
+            this.getTotalPoints(),
+            this.blockedDices
         );
         this.soundRenderer.onRoll();
     }
@@ -147,7 +147,8 @@ class GameState {
             this.canRoll(),
             this.possiblePointsForCombos,
             this.currentPointsForCombos,
-            this.getTotalPoints()
+            this.getTotalPoints(),
+            this.blockedDices
         );
         this.soundRenderer.onPointsSet();
 
@@ -166,6 +167,7 @@ class GameState {
         this.dicePoints = [];
         this.throws = 0;
 
+        this.resetBlockedDices();
         this.resetPossiblePointsForCombos();
 
         this.uIRenderer.onStateChange(
@@ -175,7 +177,8 @@ class GameState {
             this.canRoll(),
             this.possiblePointsForCombos,
             this.currentPointsForCombos,
-            this.getTotalPoints()
+            this.getTotalPoints(),
+            this.blockedDices
         );
     }
 
@@ -183,6 +186,13 @@ class GameState {
         this.possiblePointsForCombos.clear();
         for (const combo in combos) {
             this.possiblePointsForCombos.set(combo, null);
+        }
+    }
+
+    resetBlockedDices() {
+        this.blockedDices = [];
+        for (let i = 1; i <= DICE_COUNT; i++) {
+            this.blockedDices.push(false);
         }
     }
 
@@ -207,7 +217,8 @@ class GameState {
             this.canRoll(),
             this.possiblePointsForCombos,
             this.currentPointsForCombos,
-            this.getTotalPoints()
+            this.getTotalPoints(),
+            this.blockedDices
         );
         this.soundRenderer.onDiceLock();
     }
