@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Abaka</title>
 
+    <!-- css -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/game.css">
+    <!-- js scripts -->
     <script src="../js/jquery-3.6.3.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <!-- game js scripts -->
     <script src="../js/game.js"></script>
+    <script src="../js/combos.js"></script>
+    <script src="../js/image-loader.js"></script>
+    <script src="../js/game-sound-renderer.js"></script>
+    <script src="../js/game-ui-renderer.js"></script>
 </head>
 <body class="bg-success" onload="game.initGame()">
 <div class="d-flex flex-column justify-content-center align-items-center">
@@ -23,19 +30,19 @@
             </div>
         </div>
         <div class="row justify-content-around text-center">
-            <div class="col col-lg">
+            <div class="col">
                 <img id="dice1" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
-            <div class="col col-lg">
+            <div class="col">
                 <img id="dice2" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
-            <div class="col col-lg">
+            <div class="col">
                 <img id="dice3" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
-            <div class="col col-lg">
+            <div class="col">
                 <img id="dice4" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
-            <div class="col col-lg">
+            <div class="col">
                 <img id="dice5" class="dice-big" src="../svg/dice-face-unknown.svg" alt="dice">
             </div>
         </div>
@@ -59,7 +66,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr id="pairCombo" class="combo-container">
+            <tr id="pairCombo" class="combo-container table-danger">
                 <th scope="row">One pair</th>
                 <td>
                     <p>
@@ -71,7 +78,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="twoPairCombo" class="combo-container">
+            <tr id="twoPairCombo" class="combo-container table-danger">
                 <th scope="row">Two pair</th>
                 <td>
                     <p>
@@ -87,7 +94,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="threeOfAKindCombo" class="combo-container">
+            <tr id="threeOfAKindCombo" class="combo-container table-danger">
                 <th scope="row">Three of a kind</th>
                 <td>
                     <p>
@@ -101,7 +108,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="fourOfAKindCombo" class="combo-container">
+            <tr id="fourOfAKindCombo" class="combo-container table-danger">
                 <th scope="row">Four of a kind</th>
                 <td>
                     <p>
@@ -117,7 +124,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="fiveOfAKindCombo" class="combo-container">
+            <tr id="fiveOfAKindCombo" class="combo-container table-danger">
                 <th scope="row">Five of a kind</th>
                 <td>
                     <p>
@@ -135,7 +142,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="smallStraightCombo" class="combo-container">
+            <tr id="smallStraightCombo" class="combo-container table-danger">
                 <th scope="row">Small straight</th>
                 <td>
                     <p>
@@ -151,7 +158,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="bigStraightCombo" class="combo-container">
+            <tr id="bigStraightCombo" class="combo-container table-danger">
                 <th scope="row">Big straight</th>
                 <td>
                     <p>
@@ -169,7 +176,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="fullHouseCombo" class="combo-container">
+            <tr id="fullHouseCombo" class="combo-container table-danger">
                 <th scope="row">Full house</th>
                 <td>
                     <p>
@@ -187,7 +194,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="maximumCombo" class="combo-container">
+            <tr id="maximumCombo" class="combo-container table-danger">
                 <th scope="row">Maximum</th>
                 <td>
                     <p>
@@ -205,7 +212,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="minimumCombo" class="combo-container">
+            <tr id="minimumCombo" class="combo-container table-danger">
                 <th scope="row">Minimum</th>
                 <td>
                     <p>
@@ -225,7 +232,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="evensCombo" class="combo-container">
+            <tr id="evensCombo" class="combo-container table-danger">
                 <th scope="row">Evens</th>
                 <td>
                     <p>
@@ -241,7 +248,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="oddsCombo" class="combo-container">
+            <tr id="oddsCombo" class="combo-container table-danger">
                 <th scope="row">Odds</th>
                 <td>
                     <p>
@@ -257,7 +264,7 @@
                 <td class="currentThrowResult"></td>
                 <td class="currentComboResult"></td>
             </tr>
-            <tr id="jumbleCombo" class="combo-container">
+            <tr id="jumbleCombo" class="combo-container table-danger">
                 <th scope="row">Jumble</th>
                 <td>
                     <p>Any other combo already set</p>
@@ -267,12 +274,12 @@
             </tr>
             </tbody>
             <tfoot>
-                <tr class="table-dark">
-                    <th scope="row">Total</th>
-                    <td></td>
-                    <td></td>
-                    <td id="totalResult">0</td>
-                </tr>
+            <tr class="table-dark">
+                <th scope="row">Total</th>
+                <td></td>
+                <td></td>
+                <td id="totalResult">0</td>
+            </tr>
             </tfoot>
         </table>
     </div>
