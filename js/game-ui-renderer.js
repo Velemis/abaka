@@ -6,6 +6,7 @@ class GameUIRenderer {
     resultDoubleElement = null;
     rollButtonElement = null;
     comboContainers = [];
+    totalResultElement = null;
 
     constructor(imageLoader) {
         this.imageLoader = imageLoader;
@@ -15,17 +16,27 @@ class GameUIRenderer {
         this.throwCounterElement = document.getElementById("throwCounter");
         this.resultDoubleElement = document.getElementById("resultDouble");
         this.rollButtonElement = document.getElementById("rollButton");
+        this.totalResultElement = document.getElementById("totalResult");
         this.comboContainers = document.getElementsByClassName("combo-container");
         for (const comboElement of this.comboContainers) {
             comboElement.addEventListener("click", () => game.triggerCombo(comboElement.id));
         }
     }
 
-    onStateChange(dicePoints, throws, resultIsDoubled, canRoll, possiblePointsForCombos, currentPointsForCombos) {
+    onStateChange(
+        dicePoints,
+        throws,
+        resultIsDoubled,
+        canRoll,
+        possiblePointsForCombos,
+        currentPointsForCombos,
+        totalPoints
+    ) {
         this.onDicePointsChanged(dicePoints);
         this.onPossibleOrCurrentPointsChanged(possiblePointsForCombos, currentPointsForCombos);
         this.onThrowsChanged(throws, canRoll);
         this.onResultIsDoubledChanged(resultIsDoubled);
+        this.onTotalPointsChanged(totalPoints);
     }
 
     onDicePointsChanged(dicePoints) {
@@ -38,7 +49,7 @@ class GameUIRenderer {
             for (let i = 0; i < dicePoints.length && i < DICE_COUNT; i++) {
                 const dicePoint = dicePoints[i];
                 let diceElement = this.diceElements[i];
-                diceElement.src = this.imageLoader.getImagePathForPoints(dicePoint);
+                diceElement.src = this.imageLoader.getImagePathForDice(dicePoint);
             }
         }
     }
@@ -111,6 +122,10 @@ class GameUIRenderer {
             classList.remove("visible");
             classList.add("invisible");
         }
+    }
+
+    onTotalPointsChanged(totalPoints) {
+        this.totalResultElement.innerHTML = totalPoints;
     }
 
 }

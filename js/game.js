@@ -5,6 +5,7 @@ const MAX_THROWS = 3;
 // Resources consts
 const DICE_THROW_SOUNDS_COUNT = 3;
 const COIN_PICK_SOUNDS_COUNT = 5;
+const LOCK_SOUNDS_COUNT = 5;
 
 const game = {
 
@@ -45,6 +46,18 @@ const game = {
             return;
         }
         this.currentGameState.setPointsForCombo(comboId);
+    },
+
+    /**
+     * Switch the dice lock.
+     *
+     * @param diceIndex index of dice
+     */
+    switchDiceLock(diceIndex) {
+        if (this.currentGameState.canSwitchDiceLock() !== true) {
+            return;
+        }
+        this.currentGameState.switchDiceLock(diceIndex);
     }
 
 }
@@ -57,6 +70,7 @@ class GameState {
     soundRenderer = null;
     possiblePointsForCombos = new Map();
     currentPointsForCombos = new Map();
+    blockedDices = [];
 
     constructor(uIRenderer, soundRenderer) {
         this.uIRenderer = uIRenderer;
@@ -64,6 +78,9 @@ class GameState {
         this.resetPossiblePointsForCombos();
         for (const combo in combos) {
             this.currentPointsForCombos.set(combo, null);
+        }
+        for (let i = 1; i <= DICE_COUNT; i++) {
+            this.blockedDices.push(false);
         }
     }
 
@@ -73,6 +90,10 @@ class GameState {
 
     canRoll() {
         return this.throws < MAX_THROWS;
+    }
+
+    canSwitchDiceLock() {
+        return this.throws > 0 && this.throws < MAX_THROWS;
     }
 
     roll() {
@@ -87,7 +108,7 @@ class GameState {
         this.possiblePointsForCombos.clear();
         for (const combo in combos) {
             if (this.currentPointsForCombos.get(combo) === null) {
-                this.possiblePointsForCombos.set(combo, combos[combo](this.dicePoints, this.currentPointsForCombos));
+                this.possiblePointsForCombos.set(combo, this.calculatePointsForCombo(combo));
             } else {
                 this.possiblePointsForCombos.set(combo, null);
             }
@@ -99,7 +120,8 @@ class GameState {
             this.resultIsDoubled(),
             this.canRoll(),
             this.possiblePointsForCombos,
-            this.currentPointsForCombos
+            this.currentPointsForCombos,
+            this.getTotalPoints()
         );
         this.soundRenderer.onRoll();
     }
@@ -124,7 +146,8 @@ class GameState {
             this.resultIsDoubled(),
             this.canRoll(),
             this.possiblePointsForCombos,
-            this.currentPointsForCombos
+            this.currentPointsForCombos,
+            this.getTotalPoints()
         );
         this.soundRenderer.onPointsSet();
 
@@ -133,10 +156,9 @@ class GameState {
 
     calculatePointsForCombo(comboId) {
         let points = combos[comboId](this.dicePoints, this.currentPointsForCombos);
-        // todo
-        /*if (this.resultIsDoubled()) {
+        if (this.resultIsDoubled()) {
             points *= 2;
-        }*/
+        }
         return points;
     }
 
@@ -152,7 +174,8 @@ class GameState {
             this.resultIsDoubled(),
             this.canRoll(),
             this.possiblePointsForCombos,
-            this.currentPointsForCombos
+            this.currentPointsForCombos,
+            this.getTotalPoints()
         );
     }
 
@@ -161,6 +184,32 @@ class GameState {
         for (const combo in combos) {
             this.possiblePointsForCombos.set(combo, null);
         }
+    }
+
+    getTotalPoints() {
+        let currentPointsForCombosCopy = new Map(this.currentPointsForCombos);
+        let total = 0;
+        for (let key of currentPointsForCombosCopy.keys()) {
+            if (currentPointsForCombosCopy.get(key) !== null) {
+                total += currentPointsForCombosCopy.get(key);
+            }
+        }
+        return total;
+    }
+
+    switchDiceLock(diceIndex) {
+        this.blockedDices[diceIndex] = !this.blockedDices[diceIndex];
+
+        this.uIRenderer.onStateChange(
+            this.dicePoints,
+            this.throws,
+            this.resultIsDoubled(),
+            this.canRoll(),
+            this.possiblePointsForCombos,
+            this.currentPointsForCombos,
+            this.getTotalPoints()
+        );
+        this.soundRenderer.onDiceLock();
     }
 
 }
