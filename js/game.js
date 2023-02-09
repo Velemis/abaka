@@ -41,7 +41,7 @@ const game = {
      */
     triggerCombo: function (comboId) {
         // Check if we can set points
-        if (this.currentGameState.canSetPoints() !== true) {
+        if (this.currentGameState.canSetPoints(comboId) !== true) {
             return;
         }
         this.currentGameState.setPointsForCombo(comboId);
@@ -87,7 +87,7 @@ class GameState {
         this.possiblePointsForCombos.clear();
         for (const combo in combos) {
             if (this.currentPointsForCombos.get(combo) === null) {
-                this.possiblePointsForCombos.set(combo, combos[combo](this.dicePoints));
+                this.possiblePointsForCombos.set(combo, combos[combo](this.dicePoints, this.currentPointsForCombos));
             } else {
                 this.possiblePointsForCombos.set(combo, null);
             }
@@ -108,7 +108,10 @@ class GameState {
         return Math.floor(Math.random() * 5) + 1;
     }
 
-    canSetPoints() {
+    canSetPoints(comboId) {
+        if (this.currentPointsForCombos === null || this.currentPointsForCombos.get(comboId) !== null) {
+            return false;
+        }
         return this.throws > 0;
     }
 
@@ -129,7 +132,7 @@ class GameState {
     }
 
     calculatePointsForCombo(comboId) {
-        let points = combos[comboId](this.dicePoints);
+        let points = combos[comboId](this.dicePoints, this.currentPointsForCombos);
         // todo
         /*if (this.resultIsDoubled()) {
             points *= 2;
