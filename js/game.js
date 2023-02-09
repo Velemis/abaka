@@ -164,6 +164,11 @@ class GameState {
     }
 
     nextTurn() {
+        if (this.gameIsOver()) {
+            this.showScore();
+            return;
+        }
+
         this.dicePoints = [];
         this.throws = 0;
 
@@ -197,11 +202,10 @@ class GameState {
     }
 
     getTotalPoints() {
-        let currentPointsForCombosCopy = new Map(this.currentPointsForCombos);
         let total = 0;
-        for (let key of currentPointsForCombosCopy.keys()) {
-            if (currentPointsForCombosCopy.get(key) !== null) {
-                total += currentPointsForCombosCopy.get(key);
+        for (let key of this.currentPointsForCombos.keys()) {
+            if (this.currentPointsForCombos.get(key) !== null) {
+                total += this.currentPointsForCombos.get(key);
             }
         }
         return total;
@@ -221,6 +225,20 @@ class GameState {
             this.blockedDices
         );
         this.soundRenderer.onDiceLock();
+    }
+
+    gameIsOver() {
+        for (let key of this.currentPointsForCombos.keys()) {
+            if (this.currentPointsForCombos.get(key) === null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    showScore() {
+        let score = this.getTotalPoints();
+        window.location = `./score.html?score=${score}`;
     }
 
 }
