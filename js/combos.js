@@ -121,7 +121,7 @@ const combos = {
         if (dicePoints == null || dicePoints.length === 0) {
             return 0;
         }
-        return 36 - dicePoints.reduce((partialSum, a) => partialSum + a, 0);
+        return 35 - dicePoints.reduce((partialSum, a) => partialSum + a, 0);
     },
     evensCombo: function (dicePoints) {
         if (dicePoints == null || dicePoints.length === 0) {
